@@ -2,6 +2,7 @@
 package com.screenscape.example;
 
 import java.util.concurrent.*;
+import java.util.Date;
 
 public class NetworkSource {
     static final int NETWORK_TYPE_GOOGLE = 1;
@@ -10,7 +11,8 @@ public class NetworkSource {
 
     static final String GOOGLE_URL = "http://www.google.com";
     static final String YOUTUBE_URL = "http://www.youtube.com";
-    static final String SSN_URL = "http://devapp01a.dev.screenscape.local:8080/api/rest/system/ping";
+    // TODO: find something appropriate
+    static final String SSN_URL = "";
 
     private ScheduledExecutorService scheduler;
     private ConcurrentMap<Integer, NetworkInfo> networkInfoMap;
@@ -32,6 +34,16 @@ public class NetworkSource {
 
     public NetworkInfo getNetworkInfo(int type) {
         return networkInfoMap.get(type);
+    }
+
+    public void setNetworkTypeAsNotOK(int type) {
+        NetworkInfo networkInfo = networkInfoMap.get(type);
+        NetworkInfo updateNetworkInfo = new NetworkInfo();
+        updateNetworkInfo.type = networkInfo.type;
+        updateNetworkInfo.url = networkInfo.url;
+        updateNetworkInfo.isOK = false;
+        updateNetworkInfo.updatedOn = new Date().toString();
+        networkInfoMap.replace(type, updateNetworkInfo);
     }
 }
 

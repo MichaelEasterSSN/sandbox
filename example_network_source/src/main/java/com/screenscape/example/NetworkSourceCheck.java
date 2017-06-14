@@ -12,6 +12,7 @@ class NetworkSourceCheck implements Runnable {
     public int type;
     public String url;
     private ConcurrentMap<Integer, NetworkInfo> networkInfoMap;
+    private DefaultHttpClient client = new DefaultHttpClient();
 
     public NetworkSourceCheck(int type, String url, ConcurrentMap<Integer, NetworkInfo> networkInfoMap) {
         this.type = type;
@@ -34,11 +35,13 @@ class NetworkSourceCheck implements Runnable {
                     httpRequest = new HttpPost(url);
                 }
 
-                DefaultHttpClient client = new DefaultHttpClient();
                 HttpResponse response = client.execute(httpRequest);
 
                 result = (response.getStatusLine().getStatusCode() == 200);
 
+                if (response.getEntity() != null ) {
+                    response.getEntity().consumeContent();
+                }
             } catch (Exception ex) {
                 System.err.println("TRACER checkUrl caught exception: " + ex.getMessage());
             }

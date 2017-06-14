@@ -26,7 +26,13 @@ public class Runner {
                 wait = 1000 * 12;
                 try { System.out.println("sleeping ..."); Thread.sleep(wait); } catch (Exception ex) {}
                 count++;
+
+                if (count == 2) {
+                    System.out.println("\n\nTRACER intentionally setting Google as NOT OK\n\n");
+                    networkSource.setNetworkTypeAsNotOK(NetworkSource.NETWORK_TYPE_GOOGLE);
+                }
             }
+
 
             System.out.println("Ready.");
         } catch (Exception ex) {
