@@ -29,7 +29,7 @@ class NetworkSourceCheck implements Runnable {
                 HttpRequestBase httpRequest;
 
                 if (type != NetworkSource.NETWORK_TYPE_SSN) {
-                    httpRequest = new HttpGet(url);
+                    httpRequest = new HttpHead(url);
                 } else {
                     httpRequest = new HttpPost(url);
                 }
